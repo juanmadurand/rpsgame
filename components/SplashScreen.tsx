@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mui/material';
+import { Button } from '@mui/material';
 
 type Props = {
   player: string;
@@ -7,19 +7,13 @@ type Props = {
 
 export default function SplashScreen({ player, onStart }: Props) {
   return (
-    <Paper
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <>
       <div>Welcome {player}!</div>
       <Button variant="contained" onClick={onStart}>
         Start game
       </Button>
       <p>Once you start game, you have only 3 seconds to choose your weapon.</p>
       <p>Available weapons: rock, paper, scissors</p>
-    </Paper>
+    </>
   );
 }

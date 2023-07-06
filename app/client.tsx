@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { MatchResult } from '@/types';
 import SplashScreen from '@/components/SplashScreen';
 import GameScreen from '@/components/GameScreen';
+import PlayerScoreView from '@/components/PlayerScoreView';
+import { cyan, deepPurple } from '@mui/material/colors';
 
 const ResultScreen = ({
   result,
@@ -17,13 +19,13 @@ const ResultScreen = ({
   onRetry: (retry: boolean) => void;
 }) => {
   return (
-    <Box>
+    <>
       <div>Result: {result}</div>
       <Box>
         <Button onClick={() => onRetry(true)}>Retry</Button>
         <Button onClick={() => onRetry(false)}>Go back</Button>
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -52,16 +54,31 @@ export default function HomeClient({ player }: { player: string }) {
 
   return (
     <Container sx={{ marginTop: 4 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ alignItems: 'stretch' }}>
         <Grid xs={12} md={8}>
-          {renderScreen()}
+          <Paper
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              padding: 2,
+              backgroundColor: deepPurple['900'],
+            }}
+          >
+            {renderScreen()}
+          </Paper>
         </Grid>
         <Grid xs={12} md={4}>
-          <Paper>
+          <Paper sx={{ backgroundColor: cyan['900'] }}>
+            <PlayerScoreView />
             <Leaderboard />
-            <Button variant="outlined" onClick={() => logout()}>
-              Logout
-            </Button>
+            <Stack sx={{ padding: 2 }}>
+              <Button variant="outlined" onClick={() => logout()}>
+                Logout
+              </Button>
+            </Stack>
           </Paper>
         </Grid>
       </Grid>

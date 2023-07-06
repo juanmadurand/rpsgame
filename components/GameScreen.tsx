@@ -61,7 +61,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
   }
 
   return (
-    <Box>
+    <>
       <Box>
         <CountdownTimer timeout={new Date().getTime() + 3000} />
       </Box>
@@ -72,6 +72,6 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
           </Button>
         ))}
       </Stack>
-    </Box>
+    </>
   );
 }

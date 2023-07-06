@@ -24,3 +24,10 @@ export type Match = {
   /** Date of the match */
   created_at: Date;
 };
+
+export type PlayerScore = {
+  player: string;
+  wins: number;
+  losses: number;
+  draws: number;
+};
