@@ -1,12 +1,11 @@
 import Head from 'next/head';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import LoginClient from './client';
+import { getPlayer } from '@/utils/server';
 
 export default function Login() {
-  const cookieStore = cookies();
-  const displayName = cookieStore.get('displayName')?.value;
-  if (displayName) {
+  const player = getPlayer();
+  if (player) {
     redirect('/');
   }
 

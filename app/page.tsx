@@ -1,14 +1,13 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import HomeClient from './client';
+import { getPlayer } from '@/utils/server';
 
-export default function Home() {
-  const cookieStore = cookies();
-  const displayName = cookieStore.get('displayName')?.value;
+export default async function Home() {
+  const player = getPlayer();
 
-  if (!displayName) {
+  if (!player) {
     redirect('/login');
   }
 
-  return <HomeClient displayName={displayName} />;
+  return <HomeClient player={player} />;
 }

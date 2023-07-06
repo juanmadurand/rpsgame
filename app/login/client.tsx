@@ -19,10 +19,10 @@ export default function LoginClient() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const displayName = data.get('displayName');
+    const player = data.get('player');
 
-    if (displayName) {
-      login(displayName.toString());
+    if (player) {
+      login(player.toString());
       window.location.href = '/';
     }
   };
@@ -46,9 +46,9 @@ export default function LoginClient() {
             margin="normal"
             required
             fullWidth
-            id="displayName"
-            label="Display name"
-            name="displayName"
+            id="player"
+            label="Your name"
+            name="player"
             autoFocus
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
