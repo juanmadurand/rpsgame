@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { GameContext, GameContextType } from './context';
 
 const COUNTDOWN_REFRESH_INTERVAL = 50; // millis
 
@@ -19,4 +20,10 @@ export const useCountdown = (targetDate: number) => {
     seconds: Math.floor((countDown % (1000 * 60)) / 1000),
     milliseconds: countDown % 1000,
   };
+};
+
+export const usePlayer = () => {
+  const { player } = useContext(GameContext) as GameContextType;
+
+  return player;
 };

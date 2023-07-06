@@ -29,7 +29,7 @@ const ResultScreen = ({
   );
 };
 
-export default function HomeClient({ player }: { player: string }) {
+export default function HomeClient() {
   const [gameStarted, setGameStarted] = useState(false);
   const [result, setResult] = useState<MatchResult | null>(null);
 
@@ -49,7 +49,7 @@ export default function HomeClient({ player }: { player: string }) {
       return <GameScreen onFinish={result => setResult(result)} />;
     }
 
-    return <SplashScreen player={player} onStart={() => setGameStarted(true)} />;
+    return <SplashScreen onStart={() => setGameStarted(true)} />;
   };
 
   return (

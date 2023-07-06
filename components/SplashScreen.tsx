@@ -1,11 +1,13 @@
+import { Weapons } from '@/config/weapons';
+import { usePlayer } from '@/utils/hooks';
 import { Button } from '@mui/material';
 
 type Props = {
-  player: string;
   onStart: () => void;
 };
 
-export default function SplashScreen({ player, onStart }: Props) {
+export default function SplashScreen({ onStart }: Props) {
+  const player = usePlayer();
   return (
     <>
       <div>Welcome {player}!</div>
@@ -13,7 +15,7 @@ export default function SplashScreen({ player, onStart }: Props) {
         Start game
       </Button>
       <p>Once you start game, you have only 3 seconds to choose your weapon.</p>
-      <p>Available weapons: rock, paper, scissors</p>
+      <p>Available weapons: {Weapons.map(w => w.type).join(', ')}</p>
     </>
   );
 }

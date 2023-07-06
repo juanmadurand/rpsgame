@@ -1,6 +1,7 @@
 import { connectDatabase } from '@/lib/mongodb';
+import { PlayerScore } from '@/types';
 
-export async function getLeaderBoard() {
+export async function getLeaderBoard(): Promise<PlayerScore[]> {
   const db = await connectDatabase();
   const results = await db
     .collection('games')
@@ -34,7 +35,9 @@ export async function getLeaderBoard() {
     .toArray();
 
   return results.map(({ _id, ...result }) => ({
-    ...result,
     player: _id,
+    wins: result.wins,
+    draws: result.draws,
+    losses: result.losses,
   }));
 }

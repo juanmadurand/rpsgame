@@ -1,4 +1,4 @@
-import { PlayerScore } from '@/types';
+import { GameContext, GameContextType } from '@/utils/context';
 import {
   Box,
   Paper,
@@ -10,21 +10,11 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 export default function Leaderboard() {
-  const [topLeaders, setLeaders] = useState<PlayerScore[]>([]);
-  useEffect(() => {
-    fetch('/api/leaderboard')
-      .then(res => res.json())
-      .then(response => {
-        if (response.error) {
-          // setError
-          return;
-        }
-        setLeaders(response);
-      });
-  }, []);
+  const { leaderBoard } = useContext(GameContext) as GameContextType;
+
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h5" gutterBottom>
@@ -42,7 +32,7 @@ export default function Leaderboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {topLeaders.map(row => (
+            {leaderBoard.map(row => (
               <TableRow key={`leader_${row.player}`}>
                 <TableCell component="th" scope="row">
                   {row.player}

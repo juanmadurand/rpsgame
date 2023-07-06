@@ -1,4 +1,3 @@
-import { PlayerScore } from '@/types';
 import {
   Box,
   Paper,
