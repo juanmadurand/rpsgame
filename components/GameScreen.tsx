@@ -1,14 +1,16 @@
 'use client';
 
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Weapons } from '@/config/weapons';
 import { MatchResult } from '@/types';
 import CountdownTimer from '@/components/CountdownTimer';
+import { GameContext, GameContextType } from '@/utils/context';
 
 export default function GameScreen({ onFinish }: { onFinish: (result: MatchResult) => void }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { updateScore } = useContext(GameContext) as GameContextType;
 
   const handleWeaponSelect = (weaponType: string) => {
     submitGame({ weaponType });
@@ -16,7 +18,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
 
   const submitGame = useCallback(
     (params: Record<string, string>) => {
-      if (loading) {
+      if (loading || error) {
         // User already submitted response
         return;
       }
@@ -29,6 +31,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
             setError(response.error);
             return;
           }
+          updateScore(response.result);
           onFinish(response.result);
         })
         .catch(err => {
@@ -37,7 +40,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
           setLoading(false);
         });
     },
-    [loading, setLoading, onFinish]
+    [loading, setLoading, onFinish, error, updateScore]
   );
 
   useEffect(() => {

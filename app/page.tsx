@@ -13,8 +13,15 @@ export default async function Home() {
 
   const leaderBoard = await getLeaderBoard();
 
+  const userScore = leaderBoard.find(row => row.player === player) || {
+    player,
+    wins: 0,
+    losses: 0,
+    draws: 0,
+  };
+
   return (
-    <GameContextProvider player={player} leaderBoard={leaderBoard} score={null}>
+    <GameContextProvider player={player} leaderBoard={leaderBoard} score={userScore}>
       <HomeClient />
     </GameContextProvider>
   );

@@ -1,3 +1,4 @@
+import { GameContext, GameContextType } from '@/utils/context';
 import {
   Box,
   Paper,
@@ -9,8 +10,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useContext } from 'react';
 
 export default function PlayerScoreView() {
+  const { score } = useContext(GameContext) as GameContextType;
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h5" gutterBottom>
@@ -26,7 +29,14 @@ export default function PlayerScoreView() {
               <TableCell align="right">Pl</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            <TableRow key={`leader_${score.player}`}>
+              <TableCell align="right">{score.wins}</TableCell>
+              <TableCell align="right">{score.draws}</TableCell>
+              <TableCell align="right">{score.losses}</TableCell>
+              <TableCell align="right">{score.wins + score.draws + score.losses}</TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </TableContainer>
     </Box>
