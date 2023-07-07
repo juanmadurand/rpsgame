@@ -24,7 +24,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Invalid or missing weapon' }, { status: 400 });
   }
 
-  const { result, pcWeaponType } = await playGame(player, weapon);
+  const response = await playGame(player, weapon);
 
-  return NextResponse.json({ result, pcWeaponType });
+  return NextResponse.json(response);
 }

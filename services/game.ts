@@ -52,5 +52,5 @@ export async function playGame(player: string, userWeapon: Weapon): Promise<Play
   const result = getResult(userWeapon, pcWeapon);
   await insertGame(player, result, userWeapon.type);
 
-  return { result, pcWeaponType: pcWeapon.type };
+  return { result, userWeaponType: userWeapon.type, pcWeaponType: pcWeapon.type };
 }

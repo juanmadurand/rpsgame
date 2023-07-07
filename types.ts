@@ -28,6 +28,7 @@ export type Match = {
 export type PlayGameResult = {
   result: MatchResult;
   pcWeaponType: WeaponType;
+  userWeaponType: WeaponType;
 };
 
 export type PlayerScoreValues = {
