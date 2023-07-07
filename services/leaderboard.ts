@@ -31,6 +31,7 @@ export async function getLeaderBoard(): Promise<PlayerScore[]> {
       {
         $sort: { wins: -1 },
       },
+      { $limit: 10 },
     ])
     .toArray();
 

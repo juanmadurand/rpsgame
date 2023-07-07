@@ -10,10 +10,16 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 export default function Leaderboard() {
-  const { leaderBoard } = useContext(GameContext) as GameContextType;
+  const { leaderBoard, score } = useContext(GameContext) as GameContextType;
+
+  const mergedScore = useMemo(() => {
+    const lBoard = leaderBoard.filter(s => s.player !== score.player);
+
+    return lBoard.concat(score).sort((a, b) => b.wins - a.wins);
+  }, [leaderBoard, score]);
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -32,7 +38,7 @@ export default function Leaderboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {leaderBoard.map(row => (
+            {mergedScore.map(row => (
               <TableRow key={`leader_${row.player}`}>
                 <TableCell component="th" scope="row">
                   {row.player}

@@ -1,6 +1,6 @@
 import { Weapons } from '@/config/weapons';
 import { usePlayer } from '@/utils/hooks';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 type Props = {
   onStart: () => void;
@@ -10,7 +10,7 @@ export default function SplashScreen({ onStart }: Props) {
   const player = usePlayer();
   return (
     <>
-      <div>Welcome {player}!</div>
+      <Box sx={{ marginBottom: 2 }}>Welcome {player}!</Box>
       <Button variant="contained" onClick={onStart}>
         Start game
       </Button>

@@ -6,6 +6,7 @@ import { Weapons } from '@/config/weapons';
 import { MatchResult } from '@/types';
 import CountdownTimer from '@/components/CountdownTimer';
 import { GameContext, GameContextType } from '@/utils/context';
+import WeaponView from './WeaponView';
 
 export default function GameScreen({ onFinish }: { onFinish: (result: MatchResult) => void }) {
   const [loading, setLoading] = useState(false);
@@ -71,7 +72,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
       <Stack spacing={2} direction="row">
         {Weapons.map(weapon => (
           <Button key={`weapon_btn_${weapon.type}`} onClick={() => handleWeaponSelect(weapon.type)}>
-            {weapon.type}
+            <WeaponView weapon={weapon.type} />
           </Button>
         ))}
       </Stack>
