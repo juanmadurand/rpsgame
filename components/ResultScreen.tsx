@@ -2,8 +2,9 @@ import { MatchResult, PlayGameResult, WeaponType } from '@/types';
 import { Avatar, Box, Button, Fade, Stack, Typography } from '@mui/material';
 import { cyan, indigo } from '@mui/material/colors';
 import WeaponView from './WeaponView';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Weapons } from '@/config';
+import { GameContext, GameContextType } from '@/utils/context';
 
 type Props = {
   gameResult: PlayGameResult;
@@ -36,20 +37,12 @@ function FinalResult({ result }: { result: MatchResult }) {
   }
 }
 
-function WeaponViewRandom({
-  finalWeapon,
-  onFinish,
-}: {
-  finalWeapon: WeaponType;
-  onFinish: () => void;
-}) {
+function WeaponViewRandom({ onFinish }: { onFinish: () => void }) {
   const [ts, setIncremental] = useState(100);
   const [weaponIndex, setWeaponIndex] = useState(0);
 
   useEffect(() => {
     if (ts > 1000) {
-      const finalIndex = Weapons.findIndex(w => w.type === finalWeapon);
-      setWeaponIndex(finalIndex);
       onFinish();
       return;
     }
@@ -59,23 +52,30 @@ function WeaponViewRandom({
     }, ts);
 
     return () => clearTimeout(timer);
-  }, [ts, finalWeapon, onFinish]);
+  }, [ts, onFinish]);
 
   return <WeaponView weapon={Weapons[weaponIndex % Weapons.length].type} />;
 }
 
 export default function ResultScreen({ gameResult, onRetry }: Props) {
   const [showResult, setShowResult] = useState(false);
-  console.log('showResult', showResult);
+  const { updateScore } = useContext(GameContext) as GameContextType;
+
+  const handleFinish = () => {
+    setShowResult(true);
+    updateScore(gameResult.result);
+  };
+
   return (
     <>
       <Stack direction={'row'} alignItems={'center'} gap={3}>
         <WeaponView weapon={gameResult.userWeaponType} />
         <Avatar sx={{ bgcolor: cyan[900], color: 'white', fontSize: 14 }}>VS</Avatar>
-        <WeaponViewRandom
-          finalWeapon={gameResult.pcWeaponType}
-          onFinish={() => setShowResult(true)}
-        />
+        {showResult ? (
+          <WeaponView weapon={gameResult.pcWeaponType} />
+        ) : (
+          <WeaponViewRandom onFinish={handleFinish} />
+        )}
       </Stack>
       <Fade timeout={1000} in={showResult}>
         <Box sx={{ marginTop: 2 }}>

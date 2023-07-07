@@ -1,7 +1,7 @@
 'use client';
 
 import { MatchResult, PlayerScore, PlayerScoreValues } from '@/types';
-import { createContext, useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 
 export type GameContextType = {
   player: string;
@@ -19,26 +19,31 @@ type GameContextProps = React.PropsWithChildren<
 export const GameContextProvider = ({ children, player, leaderBoard, score }: GameContextProps) => {
   const [localScore, setLocalScore] = useState<PlayerScore>(score);
 
+  const updateScore = useCallback(
+    (result: MatchResult) => {
+      let key: keyof PlayerScoreValues;
+      if (result === MatchResult.DRAW) {
+        key = 'draws';
+      } else if (result === MatchResult.WIN) {
+        key = 'wins';
+      } else if (result === MatchResult.LOSE) {
+        key = 'losses';
+      } else {
+        return;
+      }
+
+      setLocalScore(prev => ({ ...prev, [key]: prev[key] + 1 }));
+    },
+    [setLocalScore]
+  );
+
   return (
     <GameContext.Provider
       value={{
         player,
         leaderBoard,
         score: localScore,
-        updateScore: (result: MatchResult) => {
-          let key: keyof PlayerScoreValues;
-          if (result === MatchResult.DRAW) {
-            key = 'draws';
-          } else if (result === MatchResult.WIN) {
-            key = 'wins';
-          } else if (result === MatchResult.LOSE) {
-            key = 'losses';
-          } else {
-            return;
-          }
-
-          setLocalScore(prev => ({ ...prev, [key]: prev[key] + 1 }));
-        },
+        updateScore,
       }}
     >
       {children}

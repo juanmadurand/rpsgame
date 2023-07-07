@@ -1,11 +1,10 @@
 'use client';
 
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PLAY_TIMEOUT, Weapons } from '@/config';
 import { PlayGameResult } from '@/types';
 import CountdownTimer from '@/components/CountdownTimer';
-import { GameContext, GameContextType } from '@/utils/context';
 import WeaponView from './WeaponView';
 
 export default function GameScreen({
@@ -15,7 +14,6 @@ export default function GameScreen({
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { updateScore } = useContext(GameContext) as GameContextType;
 
   const handleWeaponSelect = (weaponType: string) => {
     submitGame({ weaponType });
@@ -36,7 +34,6 @@ export default function GameScreen({
             setError(response.error);
             return;
           }
-          updateScore(response.result);
           onFinish(response);
         })
         .catch(err => {
@@ -45,7 +42,7 @@ export default function GameScreen({
           setLoading(false);
         });
     },
-    [loading, setLoading, onFinish, error, updateScore]
+    [loading, setLoading, onFinish, error]
   );
 
   useEffect(() => {
