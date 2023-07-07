@@ -14,3 +14,6 @@ export const Weapons = [
     defeats: [WeaponType.PAPER],
   },
 ];
+
+// Seconds
+export const PLAY_TIMEOUT = 3;

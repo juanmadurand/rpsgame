@@ -1,4 +1,4 @@
-import { Weapons } from '@/config/weapons';
+import { Weapons } from '@/config';
 import { playGame, timeoutGame } from '@/services/game';
 import { getPlayer } from '@/utils/server';
 import { NextResponse } from 'next/server';
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Invalid or missing weapon' }, { status: 400 });
   }
 
-  const result = await playGame(player, weapon);
+  const { result, pcWeaponType } = await playGame(player, weapon);
 
-  return NextResponse.json({ result });
+  return NextResponse.json({ result, pcWeaponType });
 }

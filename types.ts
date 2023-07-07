@@ -25,11 +25,17 @@ export type Match = {
   created_at: Date;
 };
 
+export type PlayGameResult = {
+  result: MatchResult;
+  pcWeaponType: WeaponType;
+};
+
 export type PlayerScoreValues = {
   wins: number;
   losses: number;
   draws: number;
 };
+
 export type PlayerScore = PlayerScoreValues & {
   player: string;
 };

@@ -1,5 +1,3 @@
-import { Weapons } from '@/config/weapons';
-import { playGame } from './game';
 import { Db, MongoClient } from 'mongodb';
 import { getLeaderBoard } from './leaderboard';
 import { WeaponType } from '@/types';

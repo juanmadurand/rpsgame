@@ -18,7 +18,7 @@ type GameContextProps = React.PropsWithChildren<
 
 export const GameContextProvider = ({ children, player, leaderBoard, score }: GameContextProps) => {
   const [localScore, setLocalScore] = useState<PlayerScore>(score);
-  console.log('localScore', localScore);
+
   return (
     <GameContext.Provider
       value={{

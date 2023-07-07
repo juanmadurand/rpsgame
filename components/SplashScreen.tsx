@@ -1,4 +1,4 @@
-import { Weapons } from '@/config/weapons';
+import { PLAY_TIMEOUT, Weapons } from '@/config';
 import { usePlayer } from '@/utils/hooks';
 import { Box, Button } from '@mui/material';
 
@@ -14,7 +14,7 @@ export default function SplashScreen({ onStart }: Props) {
       <Button variant="contained" onClick={onStart}>
         Start game
       </Button>
-      <p>Once you start game, you have only 3 seconds to choose your weapon.</p>
+      <p>Once you start game, you have only {PLAY_TIMEOUT} seconds to choose your weapon.</p>
       <p>Available weapons: {Weapons.map(w => w.type).join(', ')}</p>
     </>
   );

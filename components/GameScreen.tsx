@@ -2,13 +2,17 @@
 
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { Weapons } from '@/config/weapons';
-import { MatchResult } from '@/types';
+import { PLAY_TIMEOUT, Weapons } from '@/config';
+import { PlayGameResult } from '@/types';
 import CountdownTimer from '@/components/CountdownTimer';
 import { GameContext, GameContextType } from '@/utils/context';
 import WeaponView from './WeaponView';
 
-export default function GameScreen({ onFinish }: { onFinish: (result: MatchResult) => void }) {
+export default function GameScreen({
+  onFinish,
+}: {
+  onFinish: (gameResult: PlayGameResult) => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { updateScore } = useContext(GameContext) as GameContextType;
@@ -33,7 +37,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
             return;
           }
           updateScore(response.result);
-          onFinish(response.result);
+          onFinish(response);
         })
         .catch(err => {
           console.log('Error playing game', err);
@@ -47,7 +51,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
   useEffect(() => {
     const timer = setTimeout(async () => {
       submitGame({ timeout: 'true' });
-    }, 3000);
+    }, PLAY_TIMEOUT * 1000);
 
     return () => clearTimeout(timer);
   }, [submitGame]);
@@ -67,7 +71,7 @@ export default function GameScreen({ onFinish }: { onFinish: (result: MatchResul
   return (
     <>
       <Box>
-        <CountdownTimer timeout={new Date().getTime() + 3000} />
+        <CountdownTimer timeout={new Date().getTime() + PLAY_TIMEOUT * 1000} />
       </Box>
       <Stack spacing={2} direction="row">
         {Weapons.map(weapon => (

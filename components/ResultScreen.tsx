@@ -1,13 +1,13 @@
-import { MatchResult } from '@/types';
-import { Button, Paper, Stack, Typography } from '@mui/material';
+import { MatchResult, PlayGameResult } from '@/types';
+import { Button, Stack, Typography } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 
 type Props = {
-  result: MatchResult;
+  gameResult: PlayGameResult;
   onRetry: (retry: boolean) => void;
 };
 
-function ResultSign({ result }: Pick<Props, 'result'>) {
+function ResultSign({ result }: { result: MatchResult }) {
   switch (result) {
     case MatchResult.WIN:
       return (
@@ -33,10 +33,10 @@ function ResultSign({ result }: Pick<Props, 'result'>) {
   }
 }
 
-export default function ResultScreen({ result, onRetry }: Props) {
+export default function ResultScreen({ gameResult, onRetry }: Props) {
   return (
     <>
-      <ResultSign result={result} />
+      <ResultSign result={gameResult.result} />
       <Stack direction="row" gap={2} sx={{ marginTop: 2 }}>
         <Button sx={{ background: indigo[900] }} onClick={() => onRetry(true)}>
           Retry

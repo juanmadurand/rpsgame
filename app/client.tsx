@@ -5,7 +5,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { logout } from '@/utils/cookies';
 import Leaderboard from '@/components/Leaderboard';
 import { useState } from 'react';
-import { MatchResult } from '@/types';
+import { PlayGameResult } from '@/types';
 import SplashScreen from '@/components/SplashScreen';
 import GameScreen from '@/components/GameScreen';
 import PlayerScoreView from '@/components/PlayerScoreView';
@@ -14,17 +14,17 @@ import ResultScreen from '@/components/ResultScreen';
 
 const MainScreen = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [result, setResult] = useState<MatchResult | null>(null);
+  const [gameResult, setResult] = useState<PlayGameResult | null>(null);
 
   if (gameStarted) {
-    if (result) {
+    if (gameResult) {
       return (
         <ResultScreen
           onRetry={retry => {
             setResult(null);
             setGameStarted(retry);
           }}
-          result={result}
+          gameResult={gameResult}
         />
       );
     }

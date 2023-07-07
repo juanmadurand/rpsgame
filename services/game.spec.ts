@@ -1,4 +1,4 @@
-import { Weapons } from '@/config/weapons';
+import { Weapons } from '@/config';
 import { playGame, timeoutGame } from './game';
 import { Db, MongoClient } from 'mongodb';
 
@@ -20,7 +20,7 @@ describe('Game', () => {
   });
 
   it('Should create a game entry when playing', async () => {
-    const result = await playGame(player, Weapons[0]);
+    const { result } = await playGame(player, Weapons[0]);
 
     const plays = await db.collection('games').find({}).toArray();
 

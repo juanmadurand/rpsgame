@@ -1,6 +1,6 @@
-import { Weapons } from '@/config/weapons';
+import { Weapons } from '@/config';
 import { connectDatabase } from '@/lib/mongodb';
-import { Match, MatchResult, Weapon } from '@/types';
+import { Match, MatchResult, PlayGameResult, Weapon } from '@/types';
 
 /**
  * It uses Math.random to return a random weapon
@@ -11,12 +11,10 @@ function getComputerWeapon(): Weapon {
 }
 
 /**
- * Receives the chosen weapon by the user and outputs a match result
+ * Receives the chosen weapon by the user and pc and outputs a match result
  * @returns {MatchResult} The result of the match
  */
-function getResult(userWeapon: Weapon): MatchResult {
-  const pcWeapon = getComputerWeapon();
-
+function getResult(userWeapon: Weapon, pcWeapon: Weapon): MatchResult {
   if (!userWeapon) {
     throw new Error('Invalid weapon');
   }
@@ -48,9 +46,11 @@ export async function timeoutGame(player: string): Promise<MatchResult> {
 
   return MatchResult.LOSE;
 }
-export async function playGame(player: string, userWeapon: Weapon): Promise<MatchResult> {
-  const result = getResult(userWeapon);
+
+export async function playGame(player: string, userWeapon: Weapon): Promise<PlayGameResult> {
+  const pcWeapon = getComputerWeapon();
+  const result = getResult(userWeapon, pcWeapon);
   await insertGame(player, result, userWeapon.type);
 
-  return result;
+  return { result, pcWeaponType: pcWeapon.type };
 }

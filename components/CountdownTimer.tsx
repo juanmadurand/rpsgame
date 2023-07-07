@@ -1,3 +1,4 @@
+import { PLAY_TIMEOUT } from '@/config';
 import { useCountdown } from '@/utils/hooks';
 import { Box, LinearProgress, Typography } from '@mui/material';
 
@@ -13,7 +14,7 @@ export default function CountdownTimer({ timeout }: { timeout: number }) {
       <Box sx={{ width: '100%', mr: 1 }}>
         <LinearProgress
           variant="determinate"
-          value={((seconds * 1000 + milliseconds - 300) / 3000) * 100}
+          value={((seconds * 1000 + milliseconds - 300) / (PLAY_TIMEOUT * 1000)) * 100}
         />
       </Box>
       <Box sx={{ minWidth: 35 }}>
